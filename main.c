@@ -89,7 +89,7 @@ for(i = 0; i< strlen (msg); i++){// loop will run until the end of text input
 //defining decryption function
 void decryption(char* msg){
 int i, j;//counters
-printf("Enter 26 unique key of characters for decryption: ");
+printf("Enter 26 unique key of characters for decryption\naccording to upper or lower case of input text: ");
 scanf("%s", unique_key);//getting unique:
 
   for (i = 0; i<strlen(msg);i++){// loop until end of input text
