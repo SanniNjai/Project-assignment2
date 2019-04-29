@@ -11,11 +11,34 @@ void decryption(char* msg);
 
 int main()
 {
-int i, key, options;
-char msg[255];
-printf("Enter text: ");
-scanf("%s",msg);
+int i, key, opt, options;
+char msg[1000];
+FILE *input;// assinging file pointer
 
+printf("To Manually input '1' (or) to Read from the file '2': ");//Option for input
+scanf("%d", &opt);
+
+while(opt != 1 && opt != 2){ // if user put other than 1 or 2 in the first attemp, the loop will start
+ printf("\nInvalid input\nTo quit, enter '0' (or) To Manually input, enter '1' (or) To Read from the file, enter '2': ");
+ scanf("%d", &opt); 
+ if (opt == 0){ return 0;}// loop will end if input is '0'
+ }
+ if (opt == 1){ 
+ printf("Enter text: "); //Printing to ask user
+ scanf("%s",msg); //Getting user "string" input and storing at "text" variable
+ }
+ else if (opt == 2){ //file will read if input is 2
+     input = fopen("sub.txt", "r"); //("file name", "read")
+     if(input == NULL) { //if there is no file accessible, user's friendly error will show up and value returns to '0'
+     perror("fopen()");
+     return 0;
+     }
+     while(!feof(input)){ //making sure system reads till the end of file
+     fgets(msg, 1000, input);//getting("char variable", array size, file pointer)
+     }
+     fclose(input);
+ }
+ 
 printf("To Encrypt, enter '1' (or) To Decrypt, enter '2': ");//Asking option for En or De cryption
 scanf("%d", &options);
  
@@ -41,14 +64,14 @@ scanf("%s", unique_key);
 for(i = 0; i< strlen (msg); i++){
     for(j = 0; j<26; j++){
         
-        if (lower_case[j] == msg[i] && (msg[i]>='a' && msg[i]<='z')){
+        if (lower_case[j] == msg[i]){
            printf("\nKey replaced as below\nabcdefghijklmnopqrstuvwxyz");
            printf("\n||||||||||||||||||||||||||\n");
            printf("%s\n",unique_key);
            msg[i] = unique_key[j];
            break;
         }
-        else if(upper_case[j] == msg[i] && (msg[i]>='A' && msg[i]<='Z')){
+        else if(upper_case[j] == msg[i]){
            printf("\nKey replaced as below\nABCDEFGHIJKLMNOPQRSTUVWXYZ");
            printf("\n||||||||||||||||||||||||||\n");
            printf("%s\n",unique_key);
@@ -77,4 +100,5 @@ scanf("%s", unique_key);
     }
 printf("Decrypted text is: %s",msg);
 }
+
 
